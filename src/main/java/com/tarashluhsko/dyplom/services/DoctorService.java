@@ -13,18 +13,28 @@ public class DoctorService {
     }
 
     public Doctor create(Doctor doctor) {
-        return doctorRepository.save(doctor);
+        if (doctor != null) {
+            return doctorRepository.save(doctor);
+        }
+        return null;
     }
 
     public void delete(Long id) {
-        doctorRepository.deleteById(id.intValue());
+        if (id > 0) {
+            doctorRepository.deleteById(id.intValue());
+        }
     }
 
     public void update(Doctor doctor) {
-        doctorRepository.save(doctor);
+        if (doctor != null) {
+            doctorRepository.save(doctor);
+        }
     }
 
     public Doctor findById(Long id) {
-        return doctorRepository.findDoctorById(id);
+        if (id > 0) {
+            return doctorRepository.findDoctorById(id);
+        }
+        return null;
     }
 }

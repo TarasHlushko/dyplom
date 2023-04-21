@@ -12,17 +12,23 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public Customer create(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         if (customer != null) {
             return customerRepository.save(customer);
         }
         return null;
     }
 
-    public Customer update(Customer customer) {
+    public Customer updateCustomer(Customer customer) {
         if (customer != null) {
             return customerRepository.save(customer);
         }
         return null;
+    }
+
+    public void deleteCustomer(Long id) {
+        if (id > 0) {
+            customerRepository.deleteById(id);
+        }
     }
 }

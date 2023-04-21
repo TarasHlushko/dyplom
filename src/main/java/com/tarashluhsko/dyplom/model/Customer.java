@@ -11,25 +11,25 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-    @Column
+    @Column(name = "firstName")
     private String firstName;
-    @Column
+    @Column(name = "secondName")
     private String lastName;
-    @Column
+    @Column(name = "email")
     private String email;
-    @Column
+    @Column(name = "password")
     private String password;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+    private Doctor doctorId;
 
     public Doctor getDoctor() {
-        return doctor;
+        return doctorId;
     }
 
     public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+        this.doctorId = doctor;
     }
 
 

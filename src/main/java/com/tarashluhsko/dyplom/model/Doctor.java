@@ -23,7 +23,7 @@ public class Doctor {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "doctorId", fetch = FetchType.LAZY)
     private List<Customer> patients;
 
 
