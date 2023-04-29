@@ -1,8 +1,11 @@
 package com.tarashluhsko.dyplom.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -18,11 +21,27 @@ public class Customer {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
+    @JsonIgnore
     private String password;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Comments> comments;
+
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
+    @JsonIgnore
     private Doctor doctorId;
+
+//    private List<CustomerAuthority> authorities;
+//
+//    public List<CustomerAuthority> getAuthorities() {
+//        return authorities;
+//    }
+//
+//    public void setAuthorities(List<CustomerAuthority> authorities) {
+//        this.authorities = authorities;
+//    }
 
     public Doctor getDoctor() {
         return doctorId;

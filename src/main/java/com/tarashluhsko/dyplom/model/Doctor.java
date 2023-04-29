@@ -1,5 +1,7 @@
 package com.tarashluhsko.dyplom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,12 +23,23 @@ public class Doctor {
     @Column
     private String email;
     @Column
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @OneToMany(mappedBy = "doctorId", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Customer> patients;
 
 
+//    private List<DoctorAuthority> authorities;
+//
+//    public List<DoctorAuthority> getAuthorities() {
+//        return authorities;
+//    }
+//
+//    public void setAuthorities(List<DoctorAuthority> authorities) {
+//        this.authorities = authorities;
+//    }
 
     public Long getId() {
         return id;

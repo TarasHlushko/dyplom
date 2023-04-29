@@ -33,7 +33,7 @@ public class DoctorService {
 
     public Doctor findById(Long id) {
         if (id > 0) {
-            return doctorRepository.findDoctorById(id);
+            return doctorRepository.findFirstById(id);
         }
         return null;
     }

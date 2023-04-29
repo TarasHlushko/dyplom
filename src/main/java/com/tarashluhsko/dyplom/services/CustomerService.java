@@ -1,8 +1,11 @@
 package com.tarashluhsko.dyplom.services;
 
 import com.tarashluhsko.dyplom.model.Customer;
+import com.tarashluhsko.dyplom.model.Doctor;
 import com.tarashluhsko.dyplom.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -30,5 +33,21 @@ public class CustomerService {
         if (id > 0) {
             customerRepository.deleteById(id);
         }
+    }
+
+    public Customer findCustomerById(Long id) {
+        if (id > 0) {
+            return customerRepository.findCustomerById(id);
+        }
+        return null;
+    }
+
+    public List<Customer> findCustomersByDoctor_id(Long id) {
+        if (id > 0) {
+            Doctor doctor = new Doctor();
+            doctor.setId(id);
+            return customerRepository.findAllByDoctorId(doctor);
+        }
+        return null;
     }
 }

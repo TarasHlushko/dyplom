@@ -1,47 +1,54 @@
 package com.tarashluhsko.dyplom.controllers;
 
+import com.tarashluhsko.dyplom.model.Comments;
 import com.tarashluhsko.dyplom.model.Customer;
-import com.tarashluhsko.dyplom.services.CustomerService;
+import com.tarashluhsko.dyplom.model.Doctor;
+import com.tarashluhsko.dyplom.services.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
-public class CustomerController {
-    private final CustomerService customerService;
+@RequestMapping("/comments")
+public class CommentsController {
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    private final CommentService commentService;
+
+    public CommentsController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerCustomer(@RequestBody Customer customer) {
-        ResponseEntity<String> response = null;
+    @PostMapping("/create")
+    public ResponseEntity<String> create(@RequestBody Comments comment) {
+        ResponseEntity response = null;
         try {
-            Customer savedCustomer = customerService.createCustomer(customer);
-            if (savedCustomer.getId() > 0) {
+            comment.setDate(LocalDateTime.now());
+            Comments savedComment = commentService.create(comment);
+            if (savedComment.getId() > 0) {
                 response = ResponseEntity
                         .status(HttpStatus.CREATED)
-                        .body("Given user details are successfully registered");
+                        .body("Given comment is successfully created");
             }
         } catch (Exception e) {
-            response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            response = ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An exception occured due to " + e.getMessage());
         }
+
         return response;
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<String> update(@RequestBody Comments comment) {
         ResponseEntity<String> response = null;
         try {
-            customerService.updateCustomer(customer);
+            commentService.updateComment(comment);
             response = ResponseEntity
                     .status(HttpStatus.OK)
-                    .body("Given user details are successfully updated");
+                    .body("Given comment details are successfully updated");
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An exception occured due to " + e.getMessage());
@@ -53,10 +60,10 @@ public class CustomerController {
     public ResponseEntity<String> deleteCustomer(@RequestParam Long id) {
         ResponseEntity<String> response = null;
         try {
-            customerService.deleteCustomer(id);
+            commentService.deleteComment(id);
             response = ResponseEntity
                     .status(HttpStatus.OK)
-                    .body("Given user details are successfully deleted");
+                    .body("Given commment is successfully deleted");
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An exception occured due to " + e.getMessage());
@@ -64,13 +71,9 @@ public class CustomerController {
         return response;
     }
 
-    @GetMapping("/getAccount")
-    public Customer findCustomerById(@RequestParam Long id) {
-        return customerService.findCustomerById(id);
-    }
 
-    @GetMapping("/getPatients")
-    public List<Customer> findCustomerByDoctor_id(@RequestParam Long id) {
-        return customerService.findCustomersByDoctor_id(id);
+    @GetMapping("/getComments")
+    public List<Comments> findCommentsByCustomerId(@RequestParam Long id) {
+        return commentService.getComments(id);
     }
 }

@@ -68,4 +68,10 @@ public class DoctorController {
         }
         return response;
     }
+
+
+    @GetMapping("/getDoctor")
+    public Doctor getDoctor(@RequestParam Long id) {
+        return doctorService.findById(id);
+    }
 }
