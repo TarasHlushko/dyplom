@@ -1,7 +1,6 @@
 package com.tarashluhsko.dyplom.services;
 
 import com.tarashluhsko.dyplom.model.Comments;
-import com.tarashluhsko.dyplom.model.Customer;
 import com.tarashluhsko.dyplom.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +29,6 @@ public class CommentService {
     }
 
     public List<Comments> getComments(Long id) {
-        Customer customer = new Customer();
-        customer.setId(id);
         return commentRepository.findAllByCustomerId(id);
     }
 }

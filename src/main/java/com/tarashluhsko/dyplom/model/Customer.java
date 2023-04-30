@@ -33,6 +33,15 @@ public class Customer {
     @JsonIgnore
     private Doctor doctorId;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<BiochemicalTest> biochemicalTests;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<ArteriesTest> arteriesTests;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<MicrovesselsTest> microvesselsTests;
+
 //    private List<CustomerAuthority> authorities;
 //
 //    public List<CustomerAuthority> getAuthorities() {
@@ -51,6 +60,45 @@ public class Customer {
         this.doctorId = doctor;
     }
 
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
+    public Doctor getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(Doctor doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public List<BiochemicalTest> getBiochemicalTests() {
+        return biochemicalTests;
+    }
+
+    public void setBiochemicalTests(List<BiochemicalTest> biochemicalTests) {
+        this.biochemicalTests = biochemicalTests;
+    }
+
+    public List<ArteriesTest> getArteriesTests() {
+        return arteriesTests;
+    }
+
+    public void setArteriesTests(List<ArteriesTest> arteriesTests) {
+        this.arteriesTests = arteriesTests;
+    }
+
+    public List<MicrovesselsTest> getMicrovesselsTests() {
+        return microvesselsTests;
+    }
+
+    public void setMicrovesselsTests(List<MicrovesselsTest> microvesselsTests) {
+        this.microvesselsTests = microvesselsTests;
+    }
 
     public Long getId() {
         return id;
