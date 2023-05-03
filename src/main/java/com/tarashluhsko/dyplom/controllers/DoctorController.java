@@ -1,10 +1,14 @@
 package com.tarashluhsko.dyplom.controllers;
 
 import com.tarashluhsko.dyplom.model.Doctor;
+import com.tarashluhsko.dyplom.model.Roles;
 import com.tarashluhsko.dyplom.services.DoctorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
 
 
 @RestController
@@ -12,15 +16,21 @@ import org.springframework.web.bind.annotation.*;
 public class DoctorController {
     private final DoctorService doctorService;
 
-    public DoctorController(DoctorService doctorService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public DoctorController(DoctorService doctorService, PasswordEncoder passwordEncoder) {
         this.doctorService = doctorService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/register")
     public ResponseEntity<String> create(@RequestBody Doctor doctor) {
         ResponseEntity response = null;
         try {
             System.out.println("///////////////   " + doctor.getLastName());
+            String hashPwd = passwordEncoder.encode(doctor.getPassword());
+            doctor.setPassword(hashPwd);
+            doctor.setRole("ROLE_DOCTOR");
             Doctor savedDoctor = doctorService.create(doctor);
             if (savedDoctor.getId() > 0) {
                 response = ResponseEntity

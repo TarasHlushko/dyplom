@@ -4,6 +4,7 @@ import com.tarashluhsko.dyplom.model.Customer;
 import com.tarashluhsko.dyplom.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,14 +14,20 @@ import java.util.List;
 public class CustomerController {
     private final CustomerService customerService;
 
+//    private final PasswordEncoder passwordEncoder;
+
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
+//        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerCustomer(@RequestBody Customer customer) {
         ResponseEntity<String> response = null;
         try {
+            System.out.println(customer.getPassword() + " " + customer.getEmail());
+//            String hashPwd = passwordEncoder.encode(customer.getPassword());
+//            customer.setPassword(hashPwd);
             Customer savedCustomer = customerService.createCustomer(customer);
             if (savedCustomer.getId() > 0) {
                 response = ResponseEntity

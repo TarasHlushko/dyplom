@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "doctors")
@@ -22,6 +23,9 @@ public class Doctor {
     private String secondName;
     @Column
     private String email;
+
+    @Column(name = "role")
+    private String role;
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -30,15 +34,25 @@ public class Doctor {
     @JsonIgnore
     private List<Customer> patients;
 
+    public String getRole() {
+        return role;
+    }
 
-//    private List<DoctorAuthority> authorities;
-//
-//    public List<DoctorAuthority> getAuthorities() {
-//        return authorities;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+
+    //    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+//    private Set<Roles> roles;
+
+
+//    public Set<Roles> getRoles() {
+//        return roles;
 //    }
 //
-//    public void setAuthorities(List<DoctorAuthority> authorities) {
-//        this.authorities = authorities;
+//    public void setRoles(Set<Roles> roles) {
+//        this.roles = roles;
 //    }
 
     public Long getId() {

@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DoctorRepository extends CrudRepository<Doctor, Long> {
-    void deleteById(int id);
 
     Doctor findFirstById(Long id);
+
+    Doctor findByEmail(String email);
 
 //    void update(Doctor Doctor);
 }

@@ -1,12 +1,23 @@
 package com.tarashluhsko.dyplom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.print.Doc;
 
-public class DoctorAuthority {
+@Entity
+@Table(name = "roles")
+public class Roles {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator="native")
+    @GenericGenerator(name = "native",strategy = "native")
     private Long id;
-
+    @Column(name = "authority")
     private String name;
-
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
 

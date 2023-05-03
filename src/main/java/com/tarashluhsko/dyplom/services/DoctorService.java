@@ -21,7 +21,7 @@ public class DoctorService {
 
     public void delete(Long id) {
         if (id > 0) {
-            doctorRepository.deleteById(id.intValue());
+            doctorRepository.deleteById(id);
         }
     }
 
@@ -34,6 +34,13 @@ public class DoctorService {
     public Doctor findById(Long id) {
         if (id > 0) {
             return doctorRepository.findFirstById(id);
+        }
+        return null;
+    }
+
+    public Doctor findByEmail(String email) {
+        if (email != null) {
+            return doctorRepository.findByEmail(email);
         }
         return null;
     }

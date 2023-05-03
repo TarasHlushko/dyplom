@@ -50,4 +50,11 @@ public class CustomerService {
         }
         return null;
     }
+
+    public Customer findByEmail(String email) {
+        if (email != null) {
+            return customerRepository.findCustomerByEmail(email);
+        }
+        return null;
+    }
 }

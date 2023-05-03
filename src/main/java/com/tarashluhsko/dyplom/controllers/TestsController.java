@@ -94,6 +94,7 @@ public class TestsController {
 
     @PostMapping("arteries/create")
     public ResponseEntity<String> createArteriesTest(@RequestBody ArteriesTest arteriesTest) {
+        System.out.println(arteriesTest.getPi());
         ResponseEntity response = null;
         try {
             arteriesTest.setCreatedDt(LocalDateTime.now());

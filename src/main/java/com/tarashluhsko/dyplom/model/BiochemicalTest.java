@@ -35,7 +35,7 @@ public class BiochemicalTest {
     @Column(name = "created_dt")
     private LocalDateTime created;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -127,5 +127,22 @@ public class BiochemicalTest {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "BiochemicalTest{" +
+                "id=" + id +
+                ", bmi=" + bmi +
+                ", waistHips=" + waistHips +
+                ", gtt=" + gtt +
+                ", vldl=" + vldl +
+                ", urea=" + urea +
+                ", alt=" + alt +
+                ", alkaine=" + alkaine +
+                ", results=" + results +
+                ", created=" + created +
+                ", customer=" + customer +
+                '}';
     }
 }

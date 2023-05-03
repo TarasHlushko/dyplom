@@ -1,7 +1,9 @@
 package com.tarashluhsko.dyplom.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
@@ -28,7 +30,7 @@ public class ArteriesTest {
     @Column(name = "created_dt")
     private LocalDateTime createdDt;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -104,4 +106,5 @@ public class ArteriesTest {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
 }

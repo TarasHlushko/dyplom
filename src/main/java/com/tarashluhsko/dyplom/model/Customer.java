@@ -3,8 +3,10 @@ package com.tarashluhsko.dyplom.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,43 +23,37 @@ public class Customer {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
-    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Comments> comments;
 
-
+    @Column(name = "birth_dt")
+    private LocalDateTime birthDate;
     @ManyToOne
     @JoinColumn(name = "doctor_id")
-    @JsonIgnore
     private Doctor doctorId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<BiochemicalTest> biochemicalTests;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<ArteriesTest> arteriesTests;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<MicrovesselsTest> microvesselsTests;
 
-//    private List<CustomerAuthority> authorities;
-//
-//    public List<CustomerAuthority> getAuthorities() {
-//        return authorities;
-//    }
-//
-//    public void setAuthorities(List<CustomerAuthority> authorities) {
-//        this.authorities = authorities;
-//    }
 
-    public Doctor getDoctor() {
-        return doctorId;
+    public LocalDateTime getBirthDate() {
+        return birthDate;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctorId = doctor;
+    public void setBirthDate(LocalDateTime birthDate) {
+        this.birthDate = birthDate;
     }
 
     public List<Comments> getComments() {
