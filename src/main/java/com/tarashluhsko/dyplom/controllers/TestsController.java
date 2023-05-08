@@ -29,8 +29,8 @@ public class TestsController {
         this.microvesselsTestService = microvesselsTestService;
     }
 
-    @GetMapping("/biochemical/getAll")
-    public List<BiochemicalTest> getBiochemicalTests(@RequestParam Long id) {
+    @GetMapping("/biochemical/getAll/{id}")
+    public List<BiochemicalTest> getBiochemicalTests(@PathVariable Long id) {
         return biochemicalTestService.getBiochemicalTests(id);
     }
 
@@ -71,8 +71,8 @@ public class TestsController {
         return response;
     }
 
-    @DeleteMapping("biochemical/delete")
-    public ResponseEntity<String> deleteBiochemicalTest(@RequestParam Long id) {
+    @DeleteMapping("biochemical/delete/{id}")
+    public ResponseEntity<String> deleteBiochemicalTest(@PathVariable Long id) {
         ResponseEntity<String> response = null;
         try {
             biochemicalTestService.delete(id);
@@ -87,8 +87,8 @@ public class TestsController {
     }
 
 
-    @GetMapping("/arteries/getAll")
-    public List<ArteriesTest> getArteriesTests(@RequestParam Long id) {
+    @GetMapping("/arteries/getAll/{id}")
+    public List<ArteriesTest> getArteriesTests(@PathVariable Long id) {
         return arteriesTestService.getTests(id);
     }
 
@@ -129,8 +129,8 @@ public class TestsController {
         return response;
     }
 
-    @DeleteMapping("arteries/delete")
-    public ResponseEntity<String> deleteArteriesTest(@RequestParam Long id) {
+    @DeleteMapping("arteries/delete/{id}")
+    public ResponseEntity<String> deleteArteriesTest(@PathVariable Long id) {
         ResponseEntity<String> response = null;
         try {
             arteriesTestService.delete(id);
@@ -144,8 +144,8 @@ public class TestsController {
         return response;
     }
 
-    @GetMapping("/microvessels/getAll")
-    public List<MicrovesselsTest> getMicrovesselsTests(@RequestParam Long id) {
+    @GetMapping("/microvessels/getAll/{id}")
+    public List<MicrovesselsTest> getMicrovesselsTests(@PathVariable Long id) {
         return microvesselsTestService.getTests(id);
     }
 
@@ -185,8 +185,8 @@ public class TestsController {
         return response;
     }
 
-    @DeleteMapping("microvessels/delete")
-    public ResponseEntity<String> deleteMicrovesselsTest(@RequestParam Long id) {
+    @DeleteMapping("microvessels/delete/{id}")
+    public ResponseEntity<String> deleteMicrovesselsTest(@PathVariable Long id) {
         ResponseEntity<String> response = null;
         try {
             microvesselsTestService.delete(id);

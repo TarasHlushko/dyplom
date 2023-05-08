@@ -4,6 +4,9 @@ import com.tarashluhsko.dyplom.model.Doctor;
 import com.tarashluhsko.dyplom.repositories.DoctorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class DoctorService {
     private final DoctorRepository doctorRepository;
@@ -43,5 +46,10 @@ public class DoctorService {
             return doctorRepository.findByEmail(email);
         }
         return null;
+    }
+
+    public List<Doctor> doctorList(String value) {
+        value = value.toLowerCase();
+        return doctorRepository.findAllBySecondNameStartsWithOrFirstNameStartsWith(value, value);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 
 
 @RestController
@@ -64,8 +65,8 @@ public class DoctorController {
         return response;
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         ResponseEntity response = null;
 
         try {
@@ -80,8 +81,15 @@ public class DoctorController {
     }
 
 
-    @GetMapping("/getDoctor")
-    public Doctor getDoctor(@RequestParam Long id) {
+    @GetMapping("/getDoctor/{id}")
+    public Doctor getDoctor(@PathVariable Long id) {
         return doctorService.findById(id);
+    }
+
+
+    @GetMapping("/getAllDoctors")
+    public List<Doctor> getAllDoctors(@RequestParam String credentials) {
+        String input = credentials.toLowerCase();
+        return doctorService.doctorList(credentials);
     }
 }

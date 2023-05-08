@@ -22,7 +22,7 @@ public class ArteriesTestService {
 
         double biologicalAge = 10.39 * arteriesTest.getImc_bif() + 20.81 * arteriesTest.getImc()
                 - 14.33 * arteriesTest.getPi() - 0.743 * arteriesTest.getVed() + 33.85 * arteriesTest.getRi() + 41.09;
-        double error = 19.696 - 0.368 * (LocalDateTime.now().getYear() - arteriesTest.getCustomer().getBirthDate().getYear());
+        double error = 19.696 - 0.368 * (LocalDateTime.now().getYear() - arteriesTest.getCustomer().getBirth_dt().getYear());
         double result = biologicalAge - error;
         arteriesTest.setResults(Double.valueOf(result).intValue());
 

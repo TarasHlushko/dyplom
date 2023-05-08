@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,9 @@ public class CustomerController {
         ResponseEntity<String> response = null;
         try {
             System.out.println(customer.getPassword() + " " + customer.getEmail());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String hashPwd = passwordEncoder.encode(customer.getPassword());
+//            customer.setBirth_dt(LocalDateTime.now());
             customer.setPassword(hashPwd);
             Customer savedCustomer = customerService.createCustomer(customer);
             if (savedCustomer.getId() > 0) {
@@ -56,8 +60,8 @@ public class CustomerController {
         return response;
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCustomer(@RequestParam Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
         ResponseEntity<String> response = null;
         try {
             customerService.deleteCustomer(id);
@@ -71,13 +75,20 @@ public class CustomerController {
         return response;
     }
 
-    @GetMapping("/getAccount")
-    public Customer findCustomerById(@RequestParam Long id) {
+    @GetMapping("/getAccount/{id}")
+    public Customer findCustomerById(@PathVariable Long id) {
         return customerService.findCustomerById(id);
     }
 
-    @GetMapping("/getPatients")
-    public List<Customer> findCustomerByDoctor_id(@RequestParam Long id) {
+    @GetMapping("/getPatients/{id}")
+    public List<Customer> findCustomerByDoctor_id(@PathVariable Long id) {
         return customerService.findCustomersByDoctor_id(id);
+    }
+
+    @GetMapping("/getSearchedPatients/{id}")
+    public List<Customer> findSearchedCustomerByDoctorId(@PathVariable Long id, @RequestParam String name) {
+//        String lowerCasedValues = name.toLowerCase();
+        System.out.println("Hello " + name);
+        return customerService.findCustomersByFirstLetter(1L,name);
     }
 }

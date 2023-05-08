@@ -23,4 +23,7 @@ interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     @Query("select c from Customer c where c.doctorId = ?1")
     List<Customer> findAllByDoctorId(Doctor doctor);
+
+    List<Customer> findAllByDoctorIdFirstNameStartsWithOrLastNameStartsWith(String value1, String value2);
+    List<Customer> findAllByDoctorIdAndFirstNameStartsWithOrLastNameStartsWith(Doctor doctorId, String firstName, String lastName);
 }

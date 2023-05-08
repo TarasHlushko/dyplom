@@ -5,6 +5,7 @@ import com.tarashluhsko.dyplom.model.Doctor;
 import com.tarashluhsko.dyplom.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class CustomerService {
 
     public Customer createCustomer(Customer customer) {
         if (customer != null) {
+            customer.setRole("ROLE_CUSTOMER");
             return customerRepository.save(customer);
         }
         return null;
@@ -54,6 +56,16 @@ public class CustomerService {
     public Customer findByEmail(String email) {
         if (email != null) {
             return customerRepository.findCustomerByEmail(email);
+        }
+        return null;
+    }
+
+
+    public List<Customer> findCustomersByFirstLetter(Long id, String value) {
+        if (!value.isEmpty()) {
+            Doctor doctor = new Doctor();
+            doctor.setId(id);
+            return customerRepository.findAllByDoctorIdAndFirstNameStartsWithOrLastNameStartsWith(doctor, value, value);
         }
         return null;
     }

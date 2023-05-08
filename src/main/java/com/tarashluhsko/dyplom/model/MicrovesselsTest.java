@@ -36,7 +36,7 @@ public class MicrovesselsTest {
     @Column(name = "created_dt")
     private LocalDateTime created;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

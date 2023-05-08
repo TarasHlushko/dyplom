@@ -56,8 +56,8 @@ public class CommentsController {
         return response;
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCustomer(@RequestParam Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
         ResponseEntity<String> response = null;
         try {
             commentService.deleteComment(id);
@@ -72,8 +72,8 @@ public class CommentsController {
     }
 
 
-    @GetMapping("/getComments")
-    public List<Comments> findCommentsByCustomerId(@RequestParam Long id) {
+    @GetMapping("/getComments/{id}")
+    public List<Comments> findCommentsByCustomerId(@PathVariable Long id) {
         return commentService.getComments(id);
     }
 }

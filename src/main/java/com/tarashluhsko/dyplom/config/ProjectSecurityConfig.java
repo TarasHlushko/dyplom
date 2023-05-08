@@ -56,9 +56,9 @@ public class ProjectSecurityConfig {
                 .hasAnyRole("DOCTOR", "HEAD")
                 .requestMatchers("tests/microvessels/create", "tests/microvessels/update", "tests/microvessels/delete")
                 .hasAnyRole("DOCTOR", "HEAD")
-                .requestMatchers("/customers/getAccount", "/customers/update", "/customers/delete")
+                .requestMatchers("/customers/getAccount", "/customers/update", "/customers/delete", "doctors/getAllDoctors", "/customers/getSearchedPatients")
                 .authenticated()
-                .requestMatchers("tests/microvessels/getAll", "tests/biochemical/getAll", "tests/arteries/getAll")
+                .requestMatchers("tests/microvessels/getAll", "tests/biochemical/getAll", "tests/arteries/getAll", "/getCustomerPage")
                 .authenticated()
                 .and()
                 .formLogin().and().httpBasic();

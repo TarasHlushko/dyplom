@@ -21,7 +21,7 @@ public class BiochemicalTestService {
                 + 4.44 * biochemicalTest.getVldl() + 1.4 * biochemicalTest.getUrea() - 0.27 * biochemicalTest.getAlt()
                 + 0.13 * biochemicalTest.getAlkaine() - 30;
 
-        double error = 38.8 - 0.646 * (LocalDateTime.now().getYear() - biochemicalTest.getCustomer().getBirthDate().getYear());
+        double error = 38.8 - 0.646 * (LocalDateTime.now().getYear() - biochemicalTest.getCustomer().getBirth_dt().getYear());
 
         double result = biologicalAge - error;
 

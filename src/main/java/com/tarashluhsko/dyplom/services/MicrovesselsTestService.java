@@ -19,7 +19,7 @@ public class MicrovesselsTestService {
         double biologicalAge = 0.69 *  microvesselsTest.getBmi() + 50.58 * microvesselsTest.getWaistHips() - 0.25 * microvesselsTest.getBloodFlow() -
                 0.072 * microvesselsTest.getRecoverySpeed()  + 0.75 * microvesselsTest.getPlatelets() + 0.696;
 
-        double ERR = 48.15 - 0.82 * (LocalDateTime.now().getYear()  - microvesselsTest.getCustomer().getBirthDate().getYear());
+        double ERR = 48.15 - 0.82 * (LocalDateTime.now().getYear()  - microvesselsTest.getCustomer().getBirth_dt().getYear());
         double result = biologicalAge - ERR;
 
         microvesselsTest.setResults(Double.valueOf(result).intValue());
