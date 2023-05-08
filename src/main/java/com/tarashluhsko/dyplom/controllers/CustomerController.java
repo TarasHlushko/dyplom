@@ -89,6 +89,6 @@ public class CustomerController {
     public List<Customer> findSearchedCustomerByDoctorId(@PathVariable Long id, @RequestParam String name) {
 //        String lowerCasedValues = name.toLowerCase();
         System.out.println("Hello " + name);
-        return customerService.findCustomersByFirstLetter(1L,name);
+        return customerService.findCustomersByFirstLetter(id,name);
     }
 }
