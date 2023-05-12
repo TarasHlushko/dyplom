@@ -142,7 +142,7 @@ public class CustomerService {
         return customers;
     }
 
-
+    ///Find patients sorted by existed test and sorted by age group
     public List<PatientsWithTest> patientsForDoctorPage(Long id, String test, String age) {
         List<PatientsWithTest> patientsWithTests = new ArrayList<>();
         List<Customer> customers;

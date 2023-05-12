@@ -69,14 +69,15 @@ public class ProjectSecurityConfig {
                 .hasAnyRole("DOCTOR", "HEAD")
                 .requestMatchers("tests/arteries/create", "tests/arteries/update", "tests/arteries/delete")
                 .hasAnyRole("DOCTOR", "HEAD")
-                .requestMatchers("tests/microvessels/create", "tests/microvessels/update", "tests/microvessels/delete" , "/customers/getPatients/biochemical/")
+                .requestMatchers("tests/microvessels/create", "tests/microvessels/update", "tests/microvessels/delete" , "/customers/getPatients/biochemical/",
+                        "/customers/getPatients/sorted")
                 .hasRole("DOCTOR")
                 .requestMatchers("/customers/getAccount", "/customers/update", "/customers/delete", "doctors/getAllDoctors", "/customers/getSearchedPatients")
                 .authenticated()
                 .requestMatchers("tests/microvessels/getAll", "tests/biochemical/getAll", "tests/arteries/getAll", "/getCustomerPage")
                 .authenticated()
                 .and()
-                .formLogin().and().httpBasic().disable();
+                .formLogin().and().httpBasic();
 
         http.authenticationManager(new ProviderManager(List.of(customerUsernamePwdAuthenticationProvider, doctorAuthenticationProvider)));
 

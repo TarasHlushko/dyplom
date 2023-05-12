@@ -43,6 +43,7 @@ public class DoctorService {
 
     public Doctor findByEmail(String email) {
         if (email != null) {
+            System.out.println(doctorRepository.findByEmail(email).getFirstName());
             return doctorRepository.findByEmail(email);
         }
         return null;
