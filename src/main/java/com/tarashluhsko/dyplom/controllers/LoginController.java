@@ -2,6 +2,7 @@ package com.tarashluhsko.dyplom.controllers;
 
 import com.tarashluhsko.dyplom.model.Customer;
 import com.tarashluhsko.dyplom.model.Doctor;
+import com.tarashluhsko.dyplom.model.User;
 import com.tarashluhsko.dyplom.services.CustomerService;
 import com.tarashluhsko.dyplom.services.DoctorService;
 import org.springframework.security.core.Authentication;
@@ -22,23 +23,26 @@ public class LoginController {
         this.doctorService = doctorService;
     }
 
-    @RequestMapping("/customer")
-    public Customer getCustomerDetailsAfterLogin(Authentication authentication) {
+    @RequestMapping("/user")
+    public <T extends User> T getCustomerDetailsAfterLogin(Authentication authentication) {
         Customer customer = customerService.findByEmail(authentication.getName());
         if (customer != null) {
-            return customer;
+            return (T) customer;
         } else {
-            return null;
-        }
-
-    }
-
-    @RequestMapping("/doctor")
-    public Doctor getDoctorDetailsAfterLogin(Authentication authentication) {
-        Doctor doctor = doctorService.findByEmail(authentication.getName());
-        if (doctor != null) {
-            return doctor;
+            Doctor doctor = doctorService.findByEmail(authentication.getName());
+            if (doctor != null) {
+                return (T) doctor;
+            }
         }
         return null;
     }
+
+//    @RequestMapping("/doctor")
+//    public Doctor getDoctorDetailsAfterLogin(Authentication authentication) {
+//        Doctor doctor = doctorService.findByEmail(authentication.getName());
+//        if (doctor != null) {
+//            return doctor;
+//        }
+//        return null;
+//    }
 }

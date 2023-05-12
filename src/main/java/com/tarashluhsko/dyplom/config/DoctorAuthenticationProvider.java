@@ -20,7 +20,7 @@ public class DoctorAuthenticationProvider implements AuthenticationProvider {
     private final DoctorService doctorService;
 
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     public DoctorAuthenticationProvider(DoctorService doctorService, PasswordEncoder passwordEncoder) {

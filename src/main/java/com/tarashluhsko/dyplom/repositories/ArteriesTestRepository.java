@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ArteriesTestRepository extends CrudRepository<ArteriesTest, Long> {
     List<ArteriesTest> findAllByCustomerId(Long customer_id);
 
+    ArteriesTest findFirstByCustomerIdOrderByCreatedDtDesc(Long customer_id);
+
 }

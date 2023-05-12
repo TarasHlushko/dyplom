@@ -48,4 +48,8 @@ public class BiochemicalTestService {
     public List<BiochemicalTest> getBiochemicalTests(Long id) {
         return biochemicalTestRepository.findAllByCustomerId(id);
     }
+
+    public BiochemicalTest getLatestTest(Long id) {
+        return biochemicalTestRepository.findFirstByCustomerIdOrderByCreatedDesc(id);
+    }
 }

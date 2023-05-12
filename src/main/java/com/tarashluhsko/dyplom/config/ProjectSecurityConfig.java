@@ -1,24 +1,17 @@
 package com.tarashluhsko.dyplom.config;
 
-import com.tarashluhsko.dyplom.services.CustomerService;
-import com.tarashluhsko.dyplom.services.DoctorService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tarashluhsko.dyplom.repositories.CustomerRepository;
+import com.tarashluhsko.dyplom.repositories.DoctorRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
 
@@ -27,11 +20,33 @@ import java.util.List;
 @EnableWebSecurity
 public class ProjectSecurityConfig {
 
+    private final CustomerRepository customerRepository;
+
+
+    private final DoctorRepository doctorRepository;
+
+
+
+
+    private final MyUserDetailsSevice myUserDetailsSevice;
+
+    private final MyDoctorDetailsService myDoctorDetailsService;
+
+
+    public ProjectSecurityConfig(CustomerRepository customerRepository, DoctorRepository doctorRepository, MyUserDetailsSevice myUserDetailsSevice, MyDoctorDetailsService myDoctorDetailsService) {
+        this.customerRepository = customerRepository;
+        this.doctorRepository = doctorRepository;
+
+        this.myUserDetailsSevice = myUserDetailsSevice;
+        this.myDoctorDetailsService = myDoctorDetailsService;
+    }
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, DoctorAuthenticationProvider doctorAuthenticationProvider,
                                                    CustomerUsernamePwdAuthenticationProvider customerUsernamePwdAuthenticationProvider) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().cors().configurationSource(new CorsConfigurationSource() {
+                .and().cors()
+//                .configurationSource(new CorsConfigurationSource() {
 //            @Override
 //            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 //                CorsConfiguration config = new CorsConfiguration();
@@ -47,37 +62,43 @@ public class ProjectSecurityConfig {
                 .and().csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/home", "/customers/register", "/doctors/register").permitAll()
-                .requestMatchers("/doctors/getDoctor").hasRole("DOCTOR")
-                .requestMatchers("/comments/update", "/comments/create", "/comments/delete").hasRole("DOCTOR")
-                .requestMatchers("/doctors/update", "doctors/delete").hasRole("DOCTOR")
+                .requestMatchers("/doctors/getDoctor").hasAnyRole("DOCTOR", "HEAD")
+                .requestMatchers("/comments/update", "/comments/create", "/comments/delete").hasAnyRole("DOCTOR", "HEAD")
+                .requestMatchers("/doctors/update", "doctors/delete").hasRole("HEAD")
                 .requestMatchers("tests/biochemical/create", "tests/biochemical/update", "tests/biochemical/delete")
                 .hasAnyRole("DOCTOR", "HEAD")
                 .requestMatchers("tests/arteries/create", "tests/arteries/update", "tests/arteries/delete")
                 .hasAnyRole("DOCTOR", "HEAD")
-                .requestMatchers("tests/microvessels/create", "tests/microvessels/update", "tests/microvessels/delete")
-                .hasAnyRole("DOCTOR", "HEAD")
+                .requestMatchers("tests/microvessels/create", "tests/microvessels/update", "tests/microvessels/delete" , "/customers/getPatients/biochemical/")
+                .hasRole("DOCTOR")
                 .requestMatchers("/customers/getAccount", "/customers/update", "/customers/delete", "doctors/getAllDoctors", "/customers/getSearchedPatients")
                 .authenticated()
                 .requestMatchers("tests/microvessels/getAll", "tests/biochemical/getAll", "tests/arteries/getAll", "/getCustomerPage")
                 .authenticated()
                 .and()
-                .formLogin().and().httpBasic();
-                http.authenticationManager(new ProviderManager(List.of(customerUsernamePwdAuthenticationProvider, doctorAuthenticationProvider)));
-//        http.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class);
+                .formLogin().and().httpBasic().disable();
+
+        http.authenticationManager(new ProviderManager(List.of(customerUsernamePwdAuthenticationProvider, doctorAuthenticationProvider)));
+
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, ex) -> {
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    ex.getMessage()
+                            );
+                        }
+                );
+
 
         return http.build();
     }
 
-    @Bean
-    public DoctorAuthenticationProvider getDoctorProvider(DoctorService doctorService, PasswordEncoder passwordEncoder) {
-        DoctorAuthenticationProvider authProvider = new DoctorAuthenticationProvider(doctorService, passwordEncoder);
-        return authProvider;
-    }
 
     @Bean
-    public CustomerUsernamePwdAuthenticationProvider getCustomerProvider(CustomerService customerService, PasswordEncoder passwordEncoder) {
-        CustomerUsernamePwdAuthenticationProvider customerUsernamePwdAuthenticationProvider = new CustomerUsernamePwdAuthenticationProvider(customerService, passwordEncoder);
-        return customerUsernamePwdAuthenticationProvider;
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
+        return authConfiguration.getAuthenticationManager();
     }
 
 }

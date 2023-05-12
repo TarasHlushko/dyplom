@@ -1,17 +1,22 @@
 package com.tarashluhsko.dyplom.services;
 
-import com.tarashluhsko.dyplom.model.Comments;
+import com.tarashluhsko.dyplom.model.*;
 import com.tarashluhsko.dyplom.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
 
+
+
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
+
     }
 
     public Comments create(Comments comments) {
@@ -31,4 +36,6 @@ public class CommentService {
     public List<Comments> getComments(Long id) {
         return commentRepository.findAllByCustomerId(id);
     }
+
+
 }

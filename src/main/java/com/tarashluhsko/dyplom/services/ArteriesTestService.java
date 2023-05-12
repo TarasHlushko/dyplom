@@ -50,4 +50,8 @@ public class ArteriesTestService {
         }
         return null;
     }
+
+    public ArteriesTest getLatestTest(Long id) {
+        return arteriesTestRepository.findFirstByCustomerIdOrderByCreatedDtDesc(id);
+    }
 }

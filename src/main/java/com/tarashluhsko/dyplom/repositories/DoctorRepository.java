@@ -1,17 +1,19 @@
 package com.tarashluhsko.dyplom.repositories;
 
 import com.tarashluhsko.dyplom.model.Doctor;
+import jakarta.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.print.Doc;
 import java.util.List;
 
-@Repository
-public interface DoctorRepository extends CrudRepository<Doctor, Long> {
+@Transactional
+public interface DoctorRepository extends UserRepository<Doctor> {
 
     Doctor findFirstById(Long id);
 
-    Doctor findByEmail(String email);
+//    Doctor findByEmail(String email);
 
     List<Doctor> findAllBySecondNameStartsWithOrFirstNameStartsWith(String value, String value2);
 

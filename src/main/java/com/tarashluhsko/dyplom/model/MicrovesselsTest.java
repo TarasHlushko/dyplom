@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "microvessel")
 @Table(name = "microvessels_test")
 public class MicrovesselsTest {
     @Id

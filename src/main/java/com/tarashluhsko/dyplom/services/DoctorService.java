@@ -52,4 +52,5 @@ public class DoctorService {
         value = value.toLowerCase();
         return doctorRepository.findAllBySecondNameStartsWithOrFirstNameStartsWith(value, value);
     }
+
 }

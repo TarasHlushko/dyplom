@@ -50,4 +50,8 @@ public class MicrovesselsTestService {
         }
         return null;
     }
+
+    public MicrovesselsTest getLatestTest(Long id) {
+        return microvesselsTestRepository.findFirstByCustomerIdOrderByCreatedDesc(id);
+    }
 }
