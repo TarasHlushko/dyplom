@@ -3,9 +3,7 @@ package com.tarashluhsko.dyplom.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,28 +11,14 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
-public class Customer extends User{
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-//    @GenericGenerator(name = "native", strategy = "native")
-//    private Long id;
+public class Customer extends User {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "second_name")
     private String lastName;
-//    @Column(name = "email")
-//    private String email;
-//    @Column(name = "password")
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    private String password;
-
-//    @Column(name = "role")
-//    private String role;
-
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Comments> comments;
-
     @Column(name = "birth_dt")
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate birthDt;

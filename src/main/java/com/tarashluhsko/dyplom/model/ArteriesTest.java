@@ -1,9 +1,6 @@
 package com.tarashluhsko.dyplom.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import lombok.ToString;
+import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;

@@ -1,16 +1,13 @@
 package com.tarashluhsko.dyplom.repositories;
 
 import com.tarashluhsko.dyplom.model.ArteriesTest;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-@Repository
-public interface ArteriesTestRepository extends CrudRepository<ArteriesTest, Long> {
-    List<ArteriesTest> findAllByCustomerId(Long customer_id);
+public interface ArteriesTestRepository extends JpaRepository<ArteriesTest, Long> {
+    List<ArteriesTest> findAllByCustomerId(Long customerId);
 
-    ArteriesTest findFirstByCustomerIdOrderByCreatedDtDesc(Long customer_id);
+    ArteriesTest findFirstByCustomerIdOrderByCreatedDtDesc(Long customerId);
 
 }

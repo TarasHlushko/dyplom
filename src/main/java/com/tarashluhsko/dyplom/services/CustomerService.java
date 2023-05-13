@@ -2,17 +2,18 @@ package com.tarashluhsko.dyplom.services;
 
 import com.tarashluhsko.dyplom.model.*;
 import com.tarashluhsko.dyplom.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
-    @Autowired
-    private ApplicationContext context;
+    private final ApplicationContext context;
     private final CustomerRepository customerRepository;
     private final BiochemicalTestService biochemicalTestService;
     private final ArteriesTestService arteriesTestService;
@@ -21,11 +22,8 @@ public class CustomerService {
     private Map<String, Class<?>> tests;
     private Map<String, Integer> ageGroup;
 
-    public CustomerService(CustomerRepository customerRepository, BiochemicalTestService biochemicalTestService, ArteriesTestService arteriesTestService, MicrovesselsTestService microvesselsTestService) {
-        this.customerRepository = customerRepository;
-        this.biochemicalTestService = biochemicalTestService;
-        this.arteriesTestService = arteriesTestService;
-        this.microvesselsTestService = microvesselsTestService;
+    @PostConstruct
+    public void init() {
 
         tests = new HashMap<>();
         tests.put("biochemical", BiochemicalTest.class);
@@ -73,7 +71,7 @@ public class CustomerService {
         if (id > 0) {
             Doctor doctor = new Doctor();
             doctor.setId(id);
-            return customerRepository.findAllByDoctorId(doctor);
+            return customerRepository.findAllByDoctorId(doctor.getId());
         }
         return null;
     }
@@ -90,7 +88,7 @@ public class CustomerService {
         if (!value.isEmpty()) {
             Doctor doctor = new Doctor();
             doctor.setId(id);
-            return customerRepository.findAllByDoctorIdAndFirstNameStartsWithOrLastNameStartsWith(doctor, value, value);
+            return customerRepository.findAllByDoctorIdAndFirstNameStartsWithOrLastNameStartsWith(doctor.getId(), value, value);
         }
         return null;
     }
@@ -135,7 +133,7 @@ public class CustomerService {
         Doctor doctor = new Doctor();
         doctor.setId(id);
         List<Customer> customers = customerRepository.findAllByBirthDtBetween(LocalDate.now().minusYears(age), LocalDate.now().minusYears(age + 20),
-                doctor);
+                doctor.getId());
         System.out.println(customers.size());
         System.out.println(LocalDate.now().minusYears(age + 20));
         System.out.println(LocalDate.now().minusYears(age));
